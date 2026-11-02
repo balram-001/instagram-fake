@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lab Login - Educational Demo</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+body {
+    background: #1f1f1f;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 25px;
+}
+.container {
+    width: 100%;
+    max-width: 400px;
+    padding: 20px 0;
+}
+h2 {
+    font-size: 25px;
+    margin-bottom: 38px;
+}
+.form {
+    display: none;
+    animation: fade .3s ease;
+}
+.form.active {
+    display: block;
+}
+@keyframes fade {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+input {
+    width: 100%;
+    height: 65px;
+    background: transparent;
+    border: 1px solid #555;
+    border-radius: 17px;
+    padding: 0 25px;
+    font-size: 17px;
+    color: white;
+    outline: none;
+    margin-bottom: 18px;
+}
+input:focus {
+    border-color: #0095f6;
+}
+input::placeholder {
+    color: #aaa;
+}
+button {
+    width: 100%;
+    height: 55px;
+    border: none;
+    border-radius: 40px;
+    background: #1877db;
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 18px;
+}
+button:hover {
+    background: #0866c6;
+}
+.forgot {
+    text-align: center;
+    margin-top: 38px;
+    font-size: 18px;
+    cursor: pointer;
+    color: white;
+}
+.bottom {
+    margin-top: 70px;
+}
+.facebook {
+    background: #292a2c;
+    color: #ccc;
+    margin-bottom: 18px;
+}
+.switch {
+    background: transparent;
+    border: 1px solid #0095f6;
+    color: #399cff;
+    margin-top: 0;
+}
+.note {
+    text-align: center;
+    color: #aaa;
+    margin-top: 25px;
+    font-size: 13px;
+    background: #2a2a00;
+    padding: 8px;
+    border-radius: 8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- LOGIN FORM -->
+    <div class="form active" id="loginForm">
+        <h2>Log into your account</h2>
+        <form onsubmit="demoLogin(event)">
+            <input type="text" placeholder="Mobile number, username or email" required>
+            <input type="password" placeholder="Password" required>
+            <button type="submit">Log in</button>
+        </form>
+        <div class="forgot" onclick="alert('Demo: Password recovery')">Forgot password?</div>
+        <div class="bottom">
+            <button class="【entity-facebook¦canonical_name=Facebook】" onclick="alert('Demo only: Social login is not connected')">f &nbsp; Log in with 【entity-Facebook¦canonical_name=Facebook】</button>
+            <button class="switch" onclick="showSignup()">Create new account</button>
+        </div>
+    </div>
+
+    <!-- SIGNUP FORM -->
+    <div class="form" id="signupForm">
+        <h2>Create a new account</h2>
+        <form onsubmit="demoSignup(event)">
+            <input type="text" placeholder="Full name" required>
+            <input type="text" placeholder="Username" required>
+            <input type="email" placeholder="Email address" required>
+            <input type="password" placeholder="Create password" minlength="8" required>
+            <button type="submit">Sign up</button>
+        </form>
+        <div class="bottom">
+            <button class="switch" onclick="showLogin()">Already have an account? Log in</button>
+        </div>
+    </div>
+
+    <p class="note">⚠️ EDUCATIONAL SIMULATION ONLY • No credentials are stored or transmitted.</p>
+
+</div>
+
+<script>
+function showSignup() {
+    document.getElementById("loginForm").classList.remove("active");
+    document.getElementById("signupForm").classList.add("active");
+}
+function showLogin() {
+    document.getElementById("signupForm").classList.remove("active");
+    document.getElementById("loginForm").classList.add("active");
+}
+
+function demoLogin(event) {
+    event.preventDefault();
+    
+    setTimeout(() => {
+      window.location.href = "https://www.instagram.com/";
+    }, 1000);
+}
+
+function demoSignup(event) {
+    event.preventDefault();
+    
+    setTimeout(() => {
+      window.location.href = "https://www.instagram.com/";
+    }, 1000);
+}
+</script>
+
+</body>
+</html>
