@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lab Login - Educational Demo</title>
+<title>Lab Login Demo</title>
 
 <style>
 * {
@@ -105,26 +105,26 @@ button:hover { background: #0866c6; }
 <div class="container">
 
     <div class="form active" id="loginForm">
-        <h2>Log into your account</h2>
-        <form onsubmit="demoLogin(event)">
-            <input type="text" placeholder="Mobile number, username or email" required>
-            <input type="password" placeholder="Password" required>
+        <h2>Lab Login Demo</h2>
+        <form id="loginFormElement" onsubmit="demoLogin(event)">
+            <input id="loginEmail" type="email" placeholder="Email address" autocomplete="email" required>
+            <input id="loginPassword" type="password" placeholder="Password" autocomplete="current-password" required>
             <button type="submit">Log in</button>
         </form>
-        <div class="forgot" onclick="alert('Demo: Password recovery')">Forgot password?</div>
+        <div class="forgot" onclick="alert('Password recovery is not available in this demo.')">Forgot password?</div>
         <div class="bottom">
-            <button class="facebook" type="button" onclick="alert('Demo only: Social login is not connected')">f &nbsp; Social login demo</button>
+            <button class="facebook" type="button" onclick="alert('Social login is not enabled for this demo.')">Social login demo</button>
             <button class="switch" type="button" onclick="showSignup()">Create new account</button>
         </div>
     </div>
 
     <div class="form" id="signupForm">
-        <h2>Create a new account</h2>
-        <form onsubmit="demoSignup(event)">
-            <input type="text" placeholder="Full name" required>
-            <input type="text" placeholder="Username" required>
-            <input type="email" placeholder="Email address" required>
-            <input type="password" placeholder="Create password" minlength="8" required>
+        <h2>Create demo account</h2>
+        <form id="signupFormElement" onsubmit="demoSignup(event)">
+            <input id="signupFullName" type="text" placeholder="Full name" autocomplete="name" required>
+            <input id="signupUsername" type="text" placeholder="Username" autocomplete="username" required>
+            <input id="signupEmail" type="email" placeholder="Email address" autocomplete="email" required>
+            <input id="signupPassword" type="password" placeholder="Create password" autocomplete="new-password" minlength="8" required>
             <button type="submit">Sign up</button>
         </form>
         <div class="bottom">
@@ -136,20 +136,12 @@ button:hover { background: #0866c6; }
 
 </div>
 
-<!-- SUPABASE CONNECTION -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-const SUPABASE_URL = "https://bpmcajxcuiwxqtcmovse.supabase.co";
-const SUPABASE_KEY = "sb_publishable_bFxV495wsO6w3LlIZNllSw_WdoS3e5-";
+// Local development uses this address. After deploying server.js to Render,
+// replace it with your Render service URL, for example:
+// const API_BASE_URL = "https://lab-login-api.onrender.com";
+const API_BASE_URL = "http://localhost:5000";
 
-const supabaseClient = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
-</script>
-
-<script>
 function showSignup() {
     document.getElementById("loginForm").classList.remove("active");
     document.getElementById("signupForm").classList.add("active");
@@ -160,21 +152,66 @@ function showLogin() {
     document.getElementById("loginForm").classList.add("active");
 }
 
-function demoLogin(event) {
+async function demoLogin(event) {
     event.preventDefault();
-    alert("Demo login successful! Redirecting to instagram...");
-    setTimeout(() => {
-      window.location.href = "https://www.instagram.com/";  // <-- Yaha
-    }, 1000);
+
+    const button = event.currentTarget.querySelector("button[type='submit']");
+    button.disabled = true;
+    button.textContent = "Logging in...";
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                email: document.getElementById("loginEmail").value.trim(),
+                password: document.getElementById("loginPassword").value
+            })
+        });
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.message || "Login failed");
+        alert("Demo login successful!");
+        event.currentTarget.reset();
+    } catch (error) {
+        alert(error.message || "Unable to reach the demo server.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Log in";
+    }
 
 }
 
-function demoSignup(event) {
+async function demoSignup(event) {
     event.preventDefault();
-    alert("Demo signup successful! Redirecting to instagram...");
-    setTimeout(() => {
-      window.location.href = "https://www.instagram.com/";  // <-- Yaha bhi
-    }, 1000);
+
+    const button = event.currentTarget.querySelector("button[type='submit']");
+    button.disabled = true;
+    button.textContent = "Creating account...";
+
+    try {
+        const response = await fetch(`${API_BASE_URL}/signup`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                fullName: document.getElementById("signupFullName").value.trim(),
+                username: document.getElementById("signupUsername").value.trim(),
+                email: document.getElementById("signupEmail").value.trim(),
+                password: document.getElementById("signupPassword").value
+            })
+        });
+        const result = await response.json();
+
+        if (!response.ok) throw new Error(result.message || "Signup failed");
+        alert("Demo account created. You can now log in.");
+        event.currentTarget.reset();
+        showLogin();
+    } catch (error) {
+        alert(error.message || "Unable to reach the demo server.");
+    } finally {
+        button.disabled = false;
+        button.textContent = "Sign up";
+    }
 
 }
 </script>
