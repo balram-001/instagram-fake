@@ -137,10 +137,9 @@ button:hover { background: #0866c6; }
 </div>
 
 <script>
-// Local development uses this address. After deploying server.js to Render,
-// replace it with your Render service URL, for example:
-// const API_BASE_URL = "https://lab-login-api.onrender.com";
-const API_BASE_URL = "http://localhost:5000";
+// Render-hosted Express API. For local development, change this temporarily
+// to "http://localhost:5000".
+const API_BASE_URL = "https://instagram-fake.onrender.com";
 
 function showSignup() {
     document.getElementById("loginForm").classList.remove("active");
